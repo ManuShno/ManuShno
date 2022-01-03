@@ -35,7 +35,9 @@ My current primary project - [RODE][rode], is a comprehensive health data platfo
 ## <span id='Languages'>Languages</span>
 [<img height="30px" alt="Python" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png" />][python]
 [<img height="30px" alt="JavaScript" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" />][javascript]
-[<img height="30px" alt="SQL" src="https://w7.pngwing.com/pngs/286/519/png-transparent-microsoft-azure-sql-database-microsoft-sql-server-azure-sql-data-warehouse-logo-text-logo-microsoft-azure.png" />][sql]
+
+## <span id='Databases'>Databases</span>
+[<img height="30px" alt="Microsoft SQL Server" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWiswW2mproV9PioxJ61eKhon_AlRc1Qt9Q&usqp=CAU" />][sql]
 [<img height="30px" alt="MySQL" src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" />][mysql]
 
 ## <span id='Tools'>Tools</span>
