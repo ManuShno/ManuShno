@@ -36,7 +36,7 @@ My current primary project - [RODE][rode], is a comprehensive health data platfo
 [<img height="30px" alt="Python" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png" />][python]
 [<img height="30px" alt="JavaScript" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" />][javascript]
 [<img height="30px" alt="SQL" src="https://w7.pngwing.com/pngs/286/519/png-transparent-microsoft-azure-sql-database-microsoft-sql-server-azure-sql-data-warehouse-logo-text-logo-microsoft-azure.png" />][sql]
-[<img height="30px" alt="MySQL" src="https://spng.subpng.com/20180803/bx/kisspng-mysql-database-image-vector-graphics-integrations-opsview-5b648f451747c6.6957402115333169330954.jpg" />][mysql]
+[<img height="30px" alt="MySQL" src="https://img.favpng.com/10/20/7/mysql-logo-database-join-portable-network-graphics-png-favpng-WY969h6zBbHrrBUzesm0sxdDp.jpg" />][mysql]
 
 ## <span id='Tools'>Tools</span>
 [<img height="30px" alt="Git" src="https://helm.forske.org/assets/.profile/git.png" />][Git]
