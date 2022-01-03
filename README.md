@@ -1,8 +1,8 @@
 <!-- Project Links -->
 [forske]: https://forske.org
-[rode]: https://rode-dev.forske.org
-[canon]: https://canon-dev.forske.org
-[poteen]: https://poteen-dev.forske.org
+[rode]: https://rode.forske.org
+[canon]: https://canon.forske.org
+[poteen]: https://poteen.forske.org
 <!-- Connect Links -->
 [linkedin]: https://www.linkedin.com/in/manuel-nielsen-559a13129/
 <!-- Language Links -->
@@ -10,33 +10,21 @@
 [javascript]: https://www.javascript.com/
 [sql]: https://www.microsoft.com/en-us/sql-server
 [mysql]: https://www.mysql.com/
+[aws]: https://aws.amazon.com/
 <!-- Tool Links -->
 [git]: https://git-scm.com/
 [github]: https://github.com/
 [docker]: https://www.docker.com/
 [kubernetes]: https://kubernetes.io/
 [helm]: https://helm.sh/
-<!-- Internal Links -->
-[about]: #About
-[connect]: #Connect
-[projects]: #Projects
-[languages]: #Languages
-[tools]: #Tools
 <!-- Content -->
 # Manuel Nielsen
-1. [About][about]
-2. [Connect][connect]
-3. [Projects][projects]
-4. [Languages][languages]
-5. [Tools][tools]
-
-## <span id='About'>About</span>
 I am a full-stack developer and solution architect focussing primarily on the area of healthcare data.
 
-My current primary project - [RODE][rode], is a comprehensive health data platform that integrates real-time communications with business intelligence and best practice data governance. This architecture supports a distributed data system that maintains an organisation's data segregation in the architecture. It is a purpose built [Kubernetes][kubernetes] platform bootstrapped on bare metal Virtual Machines.
+My current primary project - [RODE][rode], is a comprehensive health data platform that integrates real-time communications with business intelligence and best practice data governance. This architecture supports a distributed data system that maintains an organisation's data segregation within the architecture. The initial version is a purpose built [Kubernetes][kubernetes] platform bootstrapped on bare metal Virtual Machines. The production version of the application will be running on [AWS][aws] utilising the AWS Elastic Kubernetes Service.
 
 ## <span id='Connect'>Connect</span>
-[<img align="left" width="30px" src="https://helm.forske.org/assets/.profile/linkedin.png" alt="LinkedIn" />][LinkedIn]<br/> 
+[<img align="left" width="30px" src="https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg" alt="LinkedIn" />][LinkedIn]<br/> 
 
 ## <span id='Projects'>Projects</span>
 * [Forkse][forske]
