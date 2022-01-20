@@ -1,0 +1,182 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-rode-ds
+  labels:
+    name: ingress
+    app: rode-ds
+  namespace: rode-ds
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: rode-ds.forske.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /core/platform
+        backend:
+          service:
+            name: core-platform-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/pipeline
+        backend:
+          service:
+            name: core-pipeline-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/linkage
+        backend:
+          service:
+            name: core-linkage-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/reference
+        backend:
+          service:
+            name: core-reference-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/data_dictionary
+        backend:
+          service:
+            name: core-data-dictionary-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/data_request
+        backend:
+          service:
+            name: core-data-request-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/document
+        backend:
+          service:
+            name: core-document-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/organisation
+        backend:
+          service:
+            name: core-organisation-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/unit
+        backend:
+          service:
+            name: core-unit-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/person
+        backend:
+          service:
+            name: core-person-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/event
+        backend:
+          service:
+            name: core-event-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/project
+        backend:
+          service:
+            name: core-project-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/publication
+        backend:
+          service:
+            name: core-publication-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/clinical_quality
+        backend:
+          service:
+            name: core-clinical-quality-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/intellectual_property
+        backend:
+          service:
+            name: core-intellectual-property-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /core/migration
+        backend:
+          service:
+            name: core-migration-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /seslhd/event
+        backend:
+          service:
+            name: seslhd-event-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /seslhd/clinical_quality
+        backend:
+          service:
+            name: seslhd-clinical-quality-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /seslhd/project
+        backend:
+          service:
+            name: seslhd-project-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /seslhd/intellectual_property
+        backend:
+          service:
+            name: seslhd-intellectual-property-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /blackdog/event
+        backend:
+          service:
+            name: blackdog-event-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /blackdog/clinical_quality
+        backend:
+          service:
+            name: blackdog-clinical-quality-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /blackdog/project
+        backend:
+          service:
+            name: blackdog-project-http
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /blackdog/intellectual_property
+        backend:
+          service:
+            name: blackdog-intellectual-property-http
+            port: 
+              number: 80

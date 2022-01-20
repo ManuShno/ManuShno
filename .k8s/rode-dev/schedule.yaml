@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: schedule.source
+  labels:
+    app: rode-dev
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: schedule.source
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /src/rode/schedule
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: schedule.source
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  resources:
+    requests:
+       storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: schedule.source
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: schedule
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  selector:
+    app: schedule
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schedule
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: schedule
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: schedule
+    spec:
+      volumes:
+      - name: schedule-source
+        persistentVolumeClaim: 
+          claimName: schedule.source
+      - name: tmp
+        persistentVolumeClaim: 
+          claimName: tmp
+      containers:
+      - name: schedule
+        image: manushno/backend:dev
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 0
+          limits:
+            memory: 4Gi
+            cpu: 2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: schedule-source
+          mountPath: /src
+        - name: tmp
+          mountPath: /tmp
+        envFrom:
+        - configMapRef:
+            name: entities
+        - configMapRef:
+            name: config
+        - secretRef:
+            name: secret
+        # livenessProbe:
+        #   httpGet:
+        #     path: /{{- if ne .name "ui" }}{{ .name }}{{- end }}
+        #     port: {{ .port | default 80 }}
+        #   initialDelaySeconds: 60
+        #   periodSeconds: 10
+        #   failureThreshold: 2{{- end }}
+      imagePullSecrets:
+      - name: regcred

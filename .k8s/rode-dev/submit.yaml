@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: submit.source
+  labels:
+    app: rode-dev
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: submit.source
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /src/rode/submit
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: submit.source
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  resources:
+    requests:
+       storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: submit.source
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: submit
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  selector:
+    app: submit
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: submit
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: submit
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: submit
+    spec:
+      volumes:
+      - name: submit-source
+        persistentVolumeClaim:
+          claimName: submit.source
+      - name: tmp
+        persistentVolumeClaim:
+          claimName: tmp
+      containers:
+      - name: submit
+        image: manushno/backend:dev
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 0
+          limits:
+            memory: 4Gi
+            cpu: 2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: submit-source
+          mountPath: /src
+        - name: tmp
+          mountPath: /tmp
+        envFrom:
+        - configMapRef:
+            name: entities
+        - configMapRef:
+            name: config
+        - secretRef:
+            name: secret
+        # livenessProbe:
+        #   httpGet:
+        #     path: /{{- if ne .name "ui" }}{{ .name }}{{- end }}
+        #     port: {{ .port | default 80 }}
+        #   initialDelaySeconds: 60
+        #   periodSeconds: 10
+        #   failureThreshold: 2{{- end }}
+      imagePullSecrets:
+      - name: regcred

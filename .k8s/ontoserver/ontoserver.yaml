@@ -1,0 +1,276 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ontoserver-data
+  labels:
+    app: ontoserver
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ontoserver-data
+  mountOptions:
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /srv/rode/.core/ontoserver
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data
+  labels:
+    app: ontoserver
+  namespace: ontoserver
+spec:
+  resources:
+    requests:
+       storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ontoserver-data
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ontoserver
+  labels:
+    app: ontoserver
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ontoserver
+  mountOptions:
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /src/rode/.ontoserver
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ontoserver
+  labels:
+    app: ontoserver
+  namespace: ontoserver
+spec:
+  resources:
+    requests:
+       storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ontoserver
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ontoserver-logs
+  labels:
+    app: ontoserver
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ontoserver-logs
+  mountOptions:
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /srv/rode/.logs/ontoserver
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: logs
+  labels:
+    app: ontoserver
+  namespace: ontoserver
+spec:
+  resources:
+    requests:
+       storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ontoserver-logs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ontoserver-tmp
+  labels:
+    app: ontoserver
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ontoserver-tmp
+  mountOptions:
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /srv/rode/.tmp
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tmp
+  labels:
+    app: ontoserver
+  namespace: ontoserver
+spec:
+  resources:
+    requests:
+       storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ontoserver-tmp
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ontoserver
+  labels:
+    name: ingress
+    app: ontoserver
+  namespace: ontoserver
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: onto.forske.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: ontoserver
+            port: 
+              number: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ontoserver
+  labels:
+    app: ontoserver
+  namespace: ontoserver
+spec:
+  selector:
+    app: ontoserver
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ontoserver-db
+  labels:
+    app: ontoserver-db
+  namespace: ontoserver
+spec:
+  selector:
+    app: ontoserver-db
+  type: NodePort
+  ports:
+  - name: postgres
+    port: 5432
+    targetPort: 5432
+    nodePort: 31999
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ontoserver
+  labels:
+    app: ontoserver
+  namespace: ontoserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ontoserver
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: ontoserver
+    spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+      volumes:
+      - name: ontoserver
+        persistentVolumeClaim:
+          claimName: ontoserver
+      - name: data
+        persistentVolumeClaim:
+          claimName: data
+      - name: tmp
+        persistentVolumeClaim:
+          claimName: tmp
+      - name: logs
+        persistentVolumeClaim:
+          claimName: logs
+      containers:
+      - name: db
+        image: postgres
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 0
+          limits:
+            memory: 8Gi
+            cpu: 4
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/postgresql/data
+        envFrom:
+        - configMapRef:
+            name: config
+        - secretRef:
+            name: secret
+        livenessProbe:
+          exec:
+            command: ["CMD-SHELL", "pg_is_ready -U postgres"]
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+      - name: ontoserver
+        image: quay.io/aehrc/ontoserver
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 0
+          limits:
+            memory: 8Gi
+            cpu: 4
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: ontoserver
+          mountPath: /var/onto
+        - name: tmp
+          mountPath: /tmp
+        - name: logs
+          mountPath: /var/log
+        envFrom:
+        - configMapRef:
+            name: config
+        - secretRef:
+            name: secret
+      imagePullSecrets:
+      - name: regcred

@@ -1,0 +1,113 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: hl7.source
+  labels:
+    app: rode-dev
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: hl7.source
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /src/rode/hl7
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hl7.source
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  resources:
+    requests:
+       storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hl7.source
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hl7
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  selector:
+    app: hl7
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hl7
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hl7
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: hl7
+    spec:
+      volumes:
+      - name: hl7-source
+        persistentVolumeClaim: 
+          claimName: hl7.source
+      - name: tmp
+        persistentVolumeClaim: 
+          claimName: tmp
+      containers:
+      - name: hl7
+        image: manushno/backend:dev
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 0
+          limits:
+            memory: 4Gi
+            cpu: 2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: hl7-source
+          mountPath: /src
+        - name: tmp
+          mountPath: /tmp
+        envFrom:
+        - configMapRef:
+            name: entities
+        - configMapRef:
+            name: config
+        env:
+        # Secrets
+        - name: core_pipeline_root
+          valueFrom:
+            secretKeyRef:
+              name: secret
+              key: core_pipeline_root
+        # livenessProbe:
+        #   httpGet:
+        #     path: /{{- if ne .name "ui" }}{{ .name }}{{- end }}
+        #     port: {{ .port | default 80 }}
+        #   initialDelaySeconds: 60
+        #   periodSeconds: 10
+        #   failureThreshold: 2{{- end }}
+      imagePullSecrets:
+      - name: regcred

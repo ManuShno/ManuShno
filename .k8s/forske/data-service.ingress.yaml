@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-forske-ds
+  labels:
+    name: ingress
+    app: forske
+  namespace: forske
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ds.forske.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: forske-ds-http
+            port: 
+              number: 80

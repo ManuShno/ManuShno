@@ -1,0 +1,153 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-backend
+  labels:
+    app: media
+  namespace: forske
+spec:
+  selector:
+    app: media-backend
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: media.backend.source
+  labels:
+    app: media
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: media.backend.source
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /src/media/backend
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media.backend.source
+  labels:
+    app: media
+  namespace: forske
+spec:
+  resources:
+    requests:
+       storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: media.backend.source
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: forske.media
+  labels:
+    app: media
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: forske.media
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /srv/forske/.media
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media
+  labels:
+    app: media
+  namespace: forske
+spec:
+  resources:
+    requests:
+       storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: forske.media
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-backend
+  labels:
+    app: media
+  namespace: forske
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: media-backend
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: media-backend
+    spec:
+      volumes:
+      - name: source
+        persistentVolumeClaim:
+          claimName: media.backend.source
+      - name: tmp
+        persistentVolumeClaim:
+          claimName: tmp
+      - name: media
+        persistentVolumeClaim:
+          claimName: media
+      - name: log
+        persistentVolumeClaim:
+          claimName: log
+      containers:
+      - name: media-backend
+        image: manushno/backend:dev
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 0
+          limits:
+            memory: 4Gi
+            cpu: 2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: source
+          mountPath: /src
+        - name: tmp
+          mountPath: /tmp
+        - name: media
+          mountPath: /media
+        - name: log
+          mountPath: /log
+        envFrom:
+        - configMapRef:
+            name: config
+        - configMapRef:
+            name: media
+        - secretRef:
+            name: secret
+        # livenessProbe:
+        #   httpGet:
+        #     path: /{{- if ne .name "ui" }}{{ .name }}{{- end }}
+        #     port: {{ .port | default 80 }}
+        #   initialDelaySeconds: 60
+        #   periodSeconds: 10
+        #   failureThreshold: 2{{- end }}
+      imagePullSecrets:
+      - name: regcred

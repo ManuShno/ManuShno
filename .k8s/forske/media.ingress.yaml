@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-media
+  labels:
+    name: ingress
+    app: media
+  namespace: forske
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 100M
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: media.forske.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: media-backend
+            port: 
+              number: 80

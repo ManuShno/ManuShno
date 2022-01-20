@@ -1,0 +1,169 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: core-project
+  labels:
+    app: rode-ds
+  namespace: rode-ds
+data:
+  SELF: core.project
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rode-core-project
+  labels:
+    app: rode-ds
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: rode-core-project
+  mountOptions:
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /srv/rode/.core/project
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: core-project
+  labels:
+    app: rode-ds
+  namespace: rode-ds
+spec:
+  resources:
+    requests:
+       storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: rode-core-project
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: core-project
+  labels:
+    app: rode-ds
+  namespace: rode-ds
+spec:
+  selector:
+    app: core-project
+  type: NodePort
+  ports:
+  - name: mysql
+    port: 3306
+    targetPort: 3306
+    nodePort: 31612
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: core-project-http
+  labels:
+    app: rode-ds-http
+  namespace: rode-ds
+spec:
+  selector:
+    app: core-project
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-project
+  labels:
+    app: rode-ds
+  namespace: rode-ds
+spec:
+  replicas: 1
+  strategy: 
+    type: Recreate
+  selector:
+    matchLabels:
+      app: core-project
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: core-project
+    spec:
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: core-project
+      - name: backup
+        persistentVolumeClaim:
+          claimName: backup
+      - name: http
+        persistentVolumeClaim:
+          claimName: rode-ds-http
+      containers:
+      - name: db
+        image: mysql
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 0
+          limits:
+            memory: 4Gi
+            cpu: 2
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+        - name: backup
+          mountPath: /.backup
+        envFrom:
+        - configMapRef:
+            name: config
+        - configMapRef:
+            name: core-project
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: password
+              key: core_project_root
+        livenessProbe:
+          exec:
+            command: ["mysqladmin", "ping"]
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+      - name: http
+        image: manushno/backend:dev
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 0
+          limits:
+            memory: 4Gi
+            cpu: 2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: http
+          mountPath: /src
+        envFrom:
+        - configMapRef:
+            name: config
+        - configMapRef:
+            name: core-project
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: password
+              key: core_project_root
+      imagePullSecrets:
+      - name: regcred

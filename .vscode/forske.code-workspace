@@ -1,0 +1,60 @@
+{
+    "folders": [
+        {
+            "name": "ma_nielsen",
+            "path": "/home/ma_nielsen"
+        },
+        {
+            "name": "ManuShno",
+            "path": "/src/ManuShno"
+        },
+        {
+			"name": "k8s",
+			"path": "/srv/forske/.media/.k8s"
+		},
+        {
+            "name": "proxy",
+            "path": "/src/proxy"
+        },
+        {
+            "name": "srv",
+            "path": "/srv"
+        },
+        {
+            "name": "forske",
+            "path": "/src/forske"
+        },
+        {
+            "name": "canon",
+            "path": "/src/canon"
+        },
+        {
+            "name": "epicure",
+            "path": "/src/epicure"
+        },
+        {
+            "name": "hub",
+            "path": "/src/hub"
+        },
+        {
+            "name": "media",
+            "path": "/src/media"
+        },
+        {
+            "name": "poteen",
+            "path": "/src/poteen"
+        },
+        {
+            "name": "reference",
+            "path": "/src/reference"
+        },
+        {
+            "name": "rode",
+            "path": "/src/rode"
+        },
+        {
+            "name": "test",
+            "path": "/src/test"
+        },
+    ]
+}

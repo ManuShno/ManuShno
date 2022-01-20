@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: user-interface.source
+  labels:
+    app: rode-dev
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: user-interface.source
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /src/rode/user-interface
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: user-interface.source
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  resources:
+    requests:
+       storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: user-interface.source
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-interface
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  selector:
+    app: user-interface
+  ports:
+  - port: 3000
+    targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-interface
+  labels:
+    app: rode-dev
+  namespace: rode-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-interface
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: user-interface
+    spec:
+      volumes:
+      - name: source
+        persistentVolumeClaim: 
+          claimName: user-interface.source
+      containers:
+      - name: user-interface
+        image: seslhd/rode.user_interface:dev
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 0
+          limits:
+            memory: 4Gi
+            cpu: 2
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: source
+          mountPath: /src
+        env:
+        # Language ENV values
+        - name: STAGE
+          value: development
+        - name: CHOKIDAR_USEPOLLING
+          value: "true"
+        # Configmaps
+        - name: REACT_APP_DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key: DOMAIN
+        # Secrets
+        - name: REACT_APP_GOOGLE_MAPS_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: secret
+              key: TOKEN.GOOGLE
+        # livenessProbe:
+        #   httpGet:
+        #     path: /{{- if ne .name "ui" }}{{ .name }}{{- end }}
+        #     port: {{ .port | default 80 }}
+        #   initialDelaySeconds: 60
+        #   periodSeconds: 10
+        #   failureThreshold: 2{{- end }}
+      imagePullSecrets:
+      - name: regcred

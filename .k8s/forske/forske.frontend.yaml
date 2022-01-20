@@ -1,0 +1,103 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: forske-frontend
+  labels:
+    app: forske
+  namespace: forske
+spec:
+  selector:
+    app: forske-frontend
+  ports:
+  - port: 3000
+    targetPort: 3000
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: forske.frontend.source
+  labels:
+    app: forske
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: forske.frontend.source
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /src/forske/frontend
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: forske.frontend.source
+  labels:
+    app: forske
+  namespace: forske
+spec:
+  resources:
+    requests:
+       storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: forske.frontend.source
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: forske-frontend
+  labels:
+    app: forske
+  namespace: forske
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: forske-frontend
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: forske-frontend
+    spec:
+      volumes:
+      - name: source
+        persistentVolumeClaim: 
+          claimName: forske.frontend.source
+      containers:
+      - name: forske-frontend
+        image: manushno/frontend:dev
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 0
+          limits:
+            memory: 4Gi
+            cpu: 2
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: source
+          mountPath: /src
+        envFrom:
+        - configMapRef:
+            name: config
+        - configMapRef:
+            name: forske
+        - secretRef:
+            name: secret
+        # livenessProbe:
+        #   httpGet:
+        #     path: /{{- if ne .name "ui" }}{{ .name }}{{- end }}
+        #     port: {{ .port | default 80 }}
+        #   initialDelaySeconds: 60
+        #   periodSeconds: 10
+        #   failureThreshold: 2{{- end }}
+      imagePullSecrets:
+      - name: regcred

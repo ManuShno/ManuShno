@@ -1,0 +1,77 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  labels:
+    name: ingress
+    app: rode
+  namespace: rode
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: rode.forske.org
+    http:
+      paths:
+      - pathType: Prefix
+        path: /api
+        backend:
+          service:
+            name: api
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /assets
+        backend:
+          service:
+            name: assets
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /auth
+        backend:
+          service:
+            name: authorisation
+            port: 
+              number: 80
+      # - pathType: Prefix
+      #   path: /hl7
+      #   backend:
+      #     service:
+      #       name: hl7
+      #       port: 
+      #         number: 80
+      # - pathType: Prefix
+      #   path: /projects
+      #   backend:
+      #     service:
+      #       name: projects
+      #       port: 
+      #         number: 80
+      - pathType: Prefix
+        path: /queries
+        backend:
+          service:
+            name: queries
+            port: 
+              number: 80
+      # - pathType: Prefix
+      #   path: /socket
+      #   backend:
+      #     service:
+      #       name: socket
+      #       port: 
+      #         number: 80
+      # - pathType: Prefix
+      #   path: /submit
+      #   backend:
+      #     service:
+      #       name: submit
+      #       port: 
+      #         number: 80
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: ui
+            port: 
+              number: 80

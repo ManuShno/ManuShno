@@ -1,0 +1,412 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: forske
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret
+  labels:
+    app: forske
+  namespace: forske
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: c1NBN0o5SnJtR1pqdUtkanl2UWY= # sSA7J9JrmGZjuKdjyvQf
+  REACT_APP_GOOGLE_MAPS_API_KEY: QUl6YVN5QTRuWDhWc2h6NXItbElySUZ4QU8yZlZNd05xaGJrbWRN
+  GOOGLE_MAPS_API_KEY: QUl6YVN5QTRuWDhWc2h6NXItbElySUZ4QU8yZlZNd05xaGJrbWRN
+  TWILIO_API_KEY: OGU2NjViNTcxOTJmZWFhZmMzMDllYmZiMDhkMTljYmYK
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+  labels:
+    app: forske
+  namespace: forske
+data:
+  NFS: 192.168.1.199
+  PYTHONUNBUFFERED: "0"
+  CHOKIDAR_USEPOLLING: "true"
+  STAGE: development
+  SQL.GET: >
+    SELECT * 
+    FROM `%(db)s`.`%(table)s`
+    %(parameters)s
+    %(order)s
+    %(limit)s;
+  SQL.POST: >
+    INSERT IGNORE INTO `%(db)s`.`%(table)s`
+      (`dt_last_updated`,`last_updated_by`,%(fields)s)
+      VALUES
+      ("%(now)s","%(user)s",%(values)s);
+  SQL.PUT: >
+    UPDATE `%(db)s`.`%(table)s` SET 
+      `dt_last_updated` = "%(now)s",
+      `last_updated_by` = "%(user)s",
+      %(updates)s
+    WHERE %(parameters)s;
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: canon
+  labels:
+    app: canon
+  namespace: forske
+data:
+  DOMAIN: canon.forske.org
+  ENTITIES_LIST: |
+    - clinical_products
+  CLINICAL_PRODUCTS: |
+    name:                   clinical_products
+    id_field:               id_clinical_product
+    description:            Representations of the RODE products. 
+    authorisation:          false
+    distribute:             false
+    query:                  false
+    object:
+      collection:
+        - ingredients
+      item: 
+        - ingredients 
+        # - names
+    params:
+      data_service:         reference
+      table:                clinical_product
+    subresources:
+      ingredients:
+        description:        Representations of the RODE clinical product ingredients. 
+        authorisation:      false
+        distribute:         false
+        query:              type
+        params:
+          data_service:     reference
+          table:            clinical_product_ingredient
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: epicure
+  labels:
+    app: epicure
+  namespace: forske
+data:
+  DOMAIN: epicure.forske.org
+  ENTITIES_LIST: |
+    - clinical_products
+  CLINICAL_PRODUCTS: |
+    name:                   clinical_products
+    id_field:               id_clinical_product
+    description:            Representations of the RODE products. 
+    authorisation:          false
+    distribute:             false
+    query:                  false
+    object:
+      collection:
+        - ingredients
+      item: 
+        - ingredients 
+        # - names
+    params:
+      data_service:         reference
+      table:                clinical_product
+    subresources:
+      ingredients:
+        description:        Representations of the RODE clinical product ingredients. 
+        authorisation:      false
+        distribute:         false
+        query:              type
+        params:
+          data_service:     reference
+          table:            clinical_product_ingredient
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: forske
+  labels:
+    app: forske
+  namespace: forske
+data:
+  DOMAIN: forske.org
+  ENTITIES_LIST: |
+    - clinical_products
+  CLINICAL_PRODUCTS: |
+    name:                   clinical_products
+    id_field:               id_clinical_product
+    description:            Representations of the RODE products. 
+    authorisation:          false
+    distribute:             false
+    query:                  false
+    object:
+      collection:
+        - ingredients
+      item: 
+        - ingredients 
+        # - names
+    params:
+      data_service:         reference
+      table:                clinical_product
+    subresources:
+      ingredients:
+        description:        Representations of the RODE clinical product ingredients. 
+        authorisation:      false
+        distribute:         false
+        query:              type
+        params:
+          data_service:     reference
+          table:            clinical_product_ingredient
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hub
+  labels:
+    app: hub
+  namespace: forske
+data:
+  DOMAIN: hub.forske.org
+  ENTITIES_LIST: |
+    - clinical_products
+  CLINICAL_PRODUCTS: |
+    name:                   clinical_products
+    id_field:               id_clinical_product
+    description:            Representations of the RODE products. 
+    authorisation:          false
+    distribute:             false
+    query:                  false
+    object:
+      collection:
+        - ingredients
+      item: 
+        - ingredients 
+        # - names
+    params:
+      data_service:         reference
+      table:                clinical_product
+    subresources:
+      ingredients:
+        description:        Representations of the RODE clinical product ingredients. 
+        authorisation:      false
+        distribute:         false
+        query:              type
+        params:
+          data_service:     reference
+          table:            clinical_product_ingredient
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: media
+  labels:
+    app: media
+  namespace: forske
+data:
+  DOMAIN: media.forske.org
+  ENTITIES_LIST: |
+    - clinical_products
+  CLINICAL_PRODUCTS: |
+    name:                   clinical_products
+    id_field:               id_clinical_product
+    description:            Representations of the RODE products. 
+    authorisation:          false
+    distribute:             false
+    query:                  false
+    object:
+      collection:
+        - ingredients
+      item: 
+        - ingredients 
+        # - names
+    params:
+      data_service:         reference
+      table:                clinical_product
+    subresources:
+      ingredients:
+        description:        Representations of the RODE clinical product ingredients. 
+        authorisation:      false
+        distribute:         false
+        query:              type
+        params:
+          data_service:     reference
+          table:            clinical_product_ingredient
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: poteen
+  labels:
+    app: poteen
+  namespace: forske
+data:
+  DOMAIN: poteen.forske.org
+  ENTITIES_LIST: |
+    - clinical_products
+  CLINICAL_PRODUCTS: |
+    name:                   clinical_products
+    id_field:               id_clinical_product
+    description:            Representations of the RODE products. 
+    authorisation:          false
+    distribute:             false
+    query:                  false
+    object:
+      collection:
+        - ingredients
+      item: 
+        - ingredients 
+        # - names
+    params:
+      data_service:         reference
+      table:                clinical_product
+    subresources:
+      ingredients:
+        description:        Representations of the RODE clinical product ingredients. 
+        authorisation:      false
+        distribute:         false
+        query:              type
+        params:
+          data_service:     reference
+          table:            clinical_product_ingredient
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: reference
+  labels:
+    app: reference
+  namespace: forske
+data:
+  DOMAIN: reference.forske.org
+  ENTITIES_LIST: |
+    - clinical_products
+  CLINICAL_PRODUCTS: |
+    name:                   clinical_products
+    id_field:               id_clinical_product
+    description:            Representations of the RODE products. 
+    authorisation:          false
+    distribute:             false
+    query:                  false
+    object:
+      collection:
+        - ingredients
+      item: 
+        - ingredients 
+        # - names
+    params:
+      data_service:         reference
+      table:                clinical_product
+    subresources:
+      ingredients:
+        description:        Representations of the RODE clinical product ingredients. 
+        authorisation:      false
+        distribute:         false
+        query:              type
+        params:
+          data_service:     reference
+          table:            clinical_product_ingredient
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: forske.tmp
+  labels:
+    app: forske
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: forske.tmp
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /srv/forske/.tmp
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tmp
+  labels:
+    app: forske
+  namespace: forske
+spec:
+  resources:
+    requests:
+       storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: forske.tmp
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: forske.log
+  labels:
+    app: forske
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: forske.log
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /srv/forske/.log
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: log
+  labels:
+    app: forske
+  namespace: forske
+spec:
+  resources:
+    requests:
+       storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: forske.log
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: certs
+  labels:
+    app: forske
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: certs
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    server: 192.168.1.199
+    path: /srv/.certs
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: certs
+  labels:
+    app: forske
+  namespace: forske
+spec:
+  resources:
+    requests:
+       storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: certs
