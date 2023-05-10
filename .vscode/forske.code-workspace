@@ -48,10 +48,6 @@
       "path": "/source/rode"
     },
     {
-      "name": "test",
-      "path": "/source/test"
-    },
-    {
       "name": "rode-platform",
       "path": "/source/rode/.platform"
     },
