@@ -1,60 +1,82 @@
 {
-    "folders": [
-        {
-            "name": "ma_nielsen",
-            "path": "/home/ma_nielsen"
-        },
-        {
-            "name": "ManuShno",
-            "path": "/src/ManuShno"
-        },
-        {
-			"name": "k8s",
-			"path": "/srv/forske/.media/.k8s"
-		},
-        {
-            "name": "proxy",
-            "path": "/src/proxy"
-        },
-        {
-            "name": "srv",
-            "path": "/srv"
-        },
-        {
-            "name": "forske",
-            "path": "/src/forske"
-        },
-        {
-            "name": "canon",
-            "path": "/src/canon"
-        },
-        {
-            "name": "epicure",
-            "path": "/src/epicure"
-        },
-        {
-            "name": "hub",
-            "path": "/src/hub"
-        },
-        {
-            "name": "media",
-            "path": "/src/media"
-        },
-        {
-            "name": "poteen",
-            "path": "/src/poteen"
-        },
-        {
-            "name": "reference",
-            "path": "/src/reference"
-        },
-        {
-            "name": "rode",
-            "path": "/src/rode"
-        },
-        {
-            "name": "test",
-            "path": "/src/test"
-        },
-    ]
+  "launch": {
+    "configurations": [
+      {
+        "name": "Python: Module",
+        "type": "python",
+        "request": "launch",
+        "module": "main",
+        "env": {
+          "PYTHONPATH": "$PYTHONPATH;/source/rode/platform/packages"
+        }
+      }
+    ],
+    "compounds": []
+  },
+  "settings": {
+    "python.analysis.extraPaths": ["/source/rode/platform/packages"],
+    "sqltools.connections": [],
+    "git.ignoreLimitWarning": true,
+    "launch": {
+      "configurations": [],
+      "compounds": []
+    }
+  },
+  "folders": [
+    {
+      "name": "ma_nielsen",
+      "path": "/home/ma_nielsen"
+    },
+    {
+      "name": "ManuShno",
+      "path": "/source/ManuShno"
+    },
+    {
+      "name": "proxy",
+      "path": "/etc/nginx"
+    },
+    {
+      "name": "static",
+      "path": "/static"
+    },
+    {
+      "name": "forske",
+      "path": "/source/forske"
+    },
+    {
+      "name": "rode",
+      "path": "/source/rode"
+    },
+    {
+      "name": "test",
+      "path": "/source/test"
+    },
+    {
+      "name": "rode-platform",
+      "path": "/source/rode/.platform"
+    },
+    {
+      "name": "rode-manifests",
+      "path": "/source/rode/.manifests"
+    },
+    {
+      "name": "rode-chrome-ext",
+      "path": "/source/rode/chrome-ext"
+    },
+    {
+      "name": "rode-cronjob",
+      "path": "/source/rode/cronjob"
+    },
+    {
+      "name": "rode-user-interface",
+      "path": "/source/rode/user-interface"
+    },
+    {
+      "name": "forske-user-interface",
+      "path": "/source/forske/user-interface-core"
+    }
+  ],
+  "extensions": {
+    "recommendations": ["mindaro.mindaro"]
+  }
 }

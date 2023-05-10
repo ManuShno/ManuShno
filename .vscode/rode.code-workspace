@@ -1,0 +1,128 @@
+{
+    "folders": [
+        {
+            "name": "ma_nielsen",
+            "path": "/home/ma_nielsen"
+        },
+        {
+            "name": "ManuShno",
+            "path": "/source/ManuShno"
+        },
+        {   
+            "name": "proxy",
+            "path": "/etc/nginx"
+        },
+        {
+            "name": "static",
+            "path": "/static/rode"
+        },
+        {
+            "name": "platform",
+            "path": "/source/rode/.platform"
+        },
+        {
+            "name": "cache",
+            "path": "/source/rode/cache"
+        },
+        {
+            "name": "data-service",
+            "path": "/source/rode/data-service"
+        },
+        {
+            "name": "entity",
+            "path": "/source/rode/entity"
+        },
+        {
+            "name": "hl7",
+            "path": "/source/rode/hl7"
+        },
+        {
+            "name": "load",
+            "path": "/source/rode/load"
+        },
+        {
+            "name": "login",
+            "path": "/source/rode/login"
+        },
+        {
+            "name": "media",
+            "path": "/source/rode/media"
+        },
+        {
+            "name": "merge",
+            "path": "/source/rode/merge"
+        },
+        {
+            "name": "mfa",
+            "path": "/source/rode/mfa"
+        },
+        {
+            "name": "ncts",
+            "path": "/source/rode/ncts"
+        },
+        {
+            "name": "normalise",
+            "path": "/source/rode/normalise"
+        },
+        {
+            "name": "password",
+            "path": "/source/rode/password"
+        },
+        {
+            "name": "project",
+            "path": "/source/rode/project"
+        },
+        {
+            "name": "query",
+            "path": "/source/rode/query"
+        },
+        {
+            "name": "register",
+            "path": "/source/rode/register"
+        },
+        {
+            "name": "registry",
+            "path": "/source/rode/registry"
+        },
+        {
+            "name": "renew",
+            "path": "/source/rode/renew"
+        },
+        {
+            "name": "schedule",
+            "path": "/source/rode/schedule"
+        },
+        {
+            "name": "scraper",
+            "path": "/source/rode/scraper"
+        },
+        {
+            "name": "smtp",
+            "path": "/source/rode/smtp"
+        },
+        {
+            "name": "socket",
+            "path": "/source/rode/socket"
+        },
+        {
+            "name": "submit",
+            "path": "/source/rode/submit"
+        },
+        {
+            "name": "token",
+            "path": "/source/rode/token"
+        },
+        {
+            "name": "transform",
+            "path": "/source/rode/transform"
+        },
+        {
+            "name": "upload",
+            "path": "/source/rode/upload"
+        },
+        {
+            "name": "user-interface",
+            "path": "/source/rode/user-interface"
+        },
+    ]
+}

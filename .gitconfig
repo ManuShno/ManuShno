@@ -3,6 +3,5 @@
 	email = manielsen@forske.org
 [http]
 	postBuffer = 157286400
-[credential "https://gitlab.forske.org"]
-	username = ma_nielsen
-	password = dcxC67bSF5MdBtH
+[pull]
+	rebase = false

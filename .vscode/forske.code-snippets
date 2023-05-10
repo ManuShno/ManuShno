@@ -19,11 +19,11 @@
 		"prefix": "k8s_workers",
 		"body": [
 			"upstream k8s_$1 {",
-			"\tserver 10.223.221.144:$2;",
-			"\tserver 10.223.221.19:$2;",
-			"\tserver 10.223.221.127:$2;",
-			"\tserver 10.223.221.93:$2;",
-			"\tserver 10.223.221.101:$2;",
+			"\tserver 10.242.79.174:$2;",
+			"\tserver 10.242.79.110:$2;",
+			"\tserver 10.242.79.183:$2;",
+			"\tserver 10.242.79.82:$2;",
+			"\tserver 10.242.79.233:$2;",
 			"}",
 			"",
 			"server {",
@@ -37,9 +37,9 @@
 		"prefix": "k8s_controllers",
 		"body": [
 			"upstream k8s_control$1 {",
-			"\tserver 10.223.221.188:$2;",
-			"\tserver 10.223.221.62:$2;",
-			"\tserver 10.223.221.57:$2;",
+			"\tserver 10.242.79.218:$2;",
+			"\tserver 10.242.79.94:$2;",
+			"\tserver 10.242.79.124:$2;",
 			"}",
 			"",
 			"server {",
@@ -49,4 +49,26 @@
 		],
 		"description": "Server backend for k8s controllers"
 	},
+	"New Heading": {
+		"prefix": "md_head",
+		"body": [ "#$1 <span id='$2'>$3</span>"],
+		"description": "New header line for markdown files"
+	},
+	"New Milestone": {
+		"prefix": "json_milestone",
+		"body": [
+			"{",
+			"\tid: $1,",
+			"\tgroup: '$2',",
+			"\tname: '$3',",
+			"\tstart: '$6',",
+			"\tend: '$7',",
+			"\tassignment: [ '$8' ],",
+			"\tdependency: [ $9 ],",
+			"\tcomplete: $10,",
+			"\tstatus: '$11',",
+			"},"
+		],
+		"description": "New milestone for GANTT tracking"
+	}
 }
