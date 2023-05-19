@@ -44,10 +44,6 @@
       "path": "/source/forske"
     },
     {
-      "name": "rode",
-      "path": "/source/rode"
-    },
-    {
       "name": "rode-platform",
       "path": "/source/rode/.platform"
     },
@@ -56,12 +52,112 @@
       "path": "/source/rode/.manifests"
     },
     {
+      "name": "rode-static",
+      "path": "/source/rode/.static"
+    },
+    {
       "name": "rode-chrome-ext",
       "path": "/source/rode/chrome-ext"
     },
     {
+      "name": "rode-package-ui",
+      "path": "/source/rode/package-ui"
+    },
+    {
       "name": "rode-cronjob",
       "path": "/source/rode/cronjob"
+    },
+    {
+      "name": "rode-data-service",
+      "path": "/source/rode/data-service"
+    },
+    {
+      "name": "rode-entity",
+      "path": "/source/rode/entity"
+    },
+    {
+      "name": "rode-hl7",
+      "path": "/source/rode/hl7"
+    },
+    {
+      "name": "rode-integration",
+      "path": "/source/rode/integration"
+    },
+    {
+      "name": "rode-load",
+      "path": "/source/rode/load"
+    },
+    {
+      "name": "rode-login",
+      "path": "/source/rode/login"
+    },
+    {
+      "name": "rode-media",
+      "path": "/source/rode/media"
+    },
+    {
+      "name": "rode-merge",
+      "path": "/source/rode/merge"
+    },
+    {
+      "name": "rode-mfa",
+      "path": "/source/rode/mfa"
+    },
+    {
+      "name": "rode-normalise",
+      "path": "/source/rode/normalise"
+    },
+    {
+      "name": "rode-password",
+      "path": "/source/rode/password"
+    },
+    {
+      "name": "rode-project",
+      "path": "/source/rode/project"
+    },
+    {
+      "name": "rode-query",
+      "path": "/source/rode/query"
+    },
+    {
+      "name": "rode-register",
+      "path": "/source/rode/register"
+    },
+    {
+      "name": "rode-renew",
+      "path": "/source/rode/renew"
+    },
+    {
+      "name": "rode-schedule",
+      "path": "/source/rode/schedule"
+    },
+    {
+      "name": "rode-scraper",
+      "path": "/source/rode/scraper"
+    },
+    {
+      "name": "rode-smtp",
+      "path": "/source/rode/smtp"
+    },
+    {
+      "name": "rode-socket",
+      "path": "/source/rode/socket"
+    },
+    {
+      "name": "rode-submit",
+      "path": "/source/rode/submit"
+    },
+    {
+      "name": "rode-token",
+      "path": "/source/rode/token"
+    },
+    {
+      "name": "rode-transform",
+      "path": "/source/rode/transform"
+    },
+    {
+      "name": "rode-upload",
+      "path": "/source/rode/upload"
     },
     {
       "name": "rode-user-interface",
