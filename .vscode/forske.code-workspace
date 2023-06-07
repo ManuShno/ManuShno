@@ -25,151 +25,151 @@
   "folders": [
     {
       "name": "ma_nielsen",
-      "path": "/home/ma_nielsen"
+      "path": "../../../home/ma_nielsen"
     },
     {
       "name": "ManuShno",
-      "path": "/source/ManuShno"
+      "path": ".."
     },
     {
       "name": "proxy",
-      "path": "/etc/nginx"
+      "path": "../../../etc/nginx"
     },
     {
       "name": "static",
-      "path": "/static"
+      "path": "../../../static"
     },
     {
       "name": "forske",
-      "path": "/source/forske"
+      "path": "../../forske"
     },
     {
       "name": "rode",
-      "path": "/source/rode"
+      "path": "../../rode"
     },
     {
       "name": "rode|platform",
-      "path": "/source/rode/.platform"
+      "path": "../../rode/.platform"
     },
     {
       "name": "rode|infrastructure",
-      "path": "/source/rode/.infrastructure"
+      "path": "../../rode/.infrastructure"
     },
     {
       "name": "rode|manifests",
-      "path": "/source/rode/.manifests"
+      "path": "../../rode/.manifests"
     },
     {
       "name": "rode|static",
-      "path": "/source/rode/.static"
+      "path": "../../rode/.static"
     },
     {
       "name": "rode|chrome-ext",
-      "path": "/source/rode/chrome-ext"
+      "path": "../../rode/chrome-ext"
     },
     {
       "name": "rode|package-ui",
-      "path": "/source/rode/package-ui"
+      "path": "../../rode/package-ui"
     },
     {
       "name": "rode|cronjob",
-      "path": "/source/rode/cronjob"
+      "path": "../../rode/cronjob"
     },
     {
       "name": "rode|data-service",
-      "path": "/source/rode/data-service"
+      "path": "../../rode/data-service"
     },
     {
       "name": "rode|entity",
-      "path": "/source/rode/entity"
-    },
-    {
-      "name": "rode|hl7",
-      "path": "/source/rode/hl7"
+      "path": "../../rode/entity"
     },
     {
       "name": "rode|integration",
-      "path": "/source/rode/integration"
+      "path": "../../rode/integration"
+    },
+    {
+      "name": "rode|hl7",
+      "path": "../../rode/hl7"
     },
     {
       "name": "rode|load",
-      "path": "/source/rode/load"
+      "path": "../../rode/load"
     },
     {
       "name": "rode|login",
-      "path": "/source/rode/login"
+      "path": "../../rode/login"
     },
     {
       "name": "rode|media",
-      "path": "/source/rode/media"
+      "path": "../../rode/media"
     },
     {
       "name": "rode|merge",
-      "path": "/source/rode/merge"
+      "path": "../../rode/merge"
     },
     {
       "name": "rode|mfa",
-      "path": "/source/rode/mfa"
+      "path": "../../rode/mfa"
     },
     {
       "name": "rode|normalise",
-      "path": "/source/rode/normalise"
+      "path": "../../rode/normalise"
     },
     {
       "name": "rode|password",
-      "path": "/source/rode/password"
+      "path": "../../rode/password"
     },
     {
       "name": "rode|project",
-      "path": "/source/rode/project"
+      "path": "../../rode/project"
     },
     {
       "name": "rode|query",
-      "path": "/source/rode/query"
+      "path": "../../rode/query"
     },
     {
       "name": "rode|register",
-      "path": "/source/rode/register"
+      "path": "../../rode/register"
     },
     {
       "name": "rode|renew",
-      "path": "/source/rode/renew"
+      "path": "../../rode/renew"
     },
     {
       "name": "rode|smtp",
-      "path": "/source/rode/smtp"
+      "path": "../../rode/smtp"
     },
     {
       "name": "rode|socket",
-      "path": "/source/rode/socket"
+      "path": "../../rode/socket"
     },
     {
       "name": "rode|submit",
-      "path": "/source/rode/submit"
+      "path": "../../rode/submit"
     },
     {
       "name": "rode|token",
-      "path": "/source/rode/token"
+      "path": "../../rode/token"
     },
     {
       "name": "rode|transform",
-      "path": "/source/rode/transform"
+      "path": "../../rode/transform"
     },
     {
       "name": "rode|upload",
-      "path": "/source/rode/upload"
+      "path": "../../rode/upload"
     },
     {
       "name": "rode|user-interface",
-      "path": "/source/rode/user-interface"
+      "path": "../../rode/user-interface"
     },
     {
       "name": "forske|user-interface",
-      "path": "/source/forske/user-interface-core"
+      "path": "../../forske/user-interface-core"
     },
     {
       "name": "ohmr|",
-      "path": "/source/ohmr"
+      "path": "../../ohmr"
     }
   ],
   "extensions": {
