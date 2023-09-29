@@ -40,11 +40,19 @@
       "path": "../../../static"
     },
     {
-      "name": "forske",
+      "name": "manifests|",
+      "path": "../../../static/forske/.public/manifests"
+    },
+    {
+      "name": "forske|",
       "path": "../../forske"
     },
     {
-      "name": "rode",
+      "name": "ohmr|",
+      "path": "../../ohmr"
+    },
+    {
+      "name": "rode|",
       "path": "../../rode"
     },
     {
@@ -56,20 +64,24 @@
       "path": "../../rode/.infrastructure"
     },
     {
-      "name": "rode|manifests",
-      "path": "../../rode/.manifests"
-    },
-    {
       "name": "rode|static",
       "path": "../../rode/.static"
     },
     {
-      "name": "rode|chrome-ext",
-      "path": "../../rode/chrome-ext"
+      "name": "rode|lib",
+      "path": "../../rode/.lib"
     },
     {
-      "name": "rode|package-ui",
-      "path": "../../rode/package-ui"
+      "name": "rode|components",
+      "path": "../../rode/.components"
+    },
+    {
+      "name": "rode|types",
+      "path": "../../rode/.types"
+    },
+    {
+      "name": "rode|chrome-ext",
+      "path": "../../rode/chrome-ext"
     },
     {
       "name": "rode|cronjob",
@@ -96,10 +108,6 @@
       "path": "../../rode/load"
     },
     {
-      "name": "rode|login",
-      "path": "../../rode/login"
-    },
-    {
       "name": "rode|media",
       "path": "../../rode/media"
     },
@@ -110,6 +118,10 @@
     {
       "name": "rode|mfa",
       "path": "../../rode/mfa"
+    },
+    {
+      "name": "rode|mock",
+      "path": "../../rode/mock"
     },
     {
       "name": "rode|normalise",
@@ -162,14 +174,6 @@
     {
       "name": "rode|user-interface",
       "path": "../../rode/user-interface"
-    },
-    {
-      "name": "forske|user-interface",
-      "path": "../../forske/user-interface-core"
-    },
-    {
-      "name": "ohmr|",
-      "path": "../../ohmr"
     }
   ],
   "extensions": {
